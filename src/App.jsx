@@ -28,10 +28,6 @@ function App() {
   };
 
   const checkWinner = grid => {
-    // Define o jogador com base no turno
-    const currentPlayer = playerTurn ? 'X' : 'O';
-
-    // Verificar linhas e colunas
     for (let i = 0; i < 3; i++) {
       if (
         grid[i].every(cell => cell === currentPlayer) || // Linha
@@ -43,8 +39,8 @@ function App() {
 
     // Verificar diagonais
     if (
-      [0, 1, 2].every(index => grid[index][index] === currentPlayer) || // Diagonal principal
-      [0, 1, 2].every(index => grid[index][2 - index] === currentPlayer) // Diagonal secundária
+      [0, 1, 2].every(index => grid[index][index] === currentPlayer) || 
+      [0, 1, 2].every(index => grid[index][2 - index] === currentPlayer) 
     ) {
       return true;
     }
