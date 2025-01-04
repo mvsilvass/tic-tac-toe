@@ -84,7 +84,9 @@ function App() {
     ) : (
       <>
         <div className="result">
-          {winner === 'Draw' ? 'Empate!' : `Vencedor: ${winner}`}
+          <p>
+            {winner === 'Draw' ? 'Empate!' : `Vencedor: ${winner}`}
+          </p>
         </div>
 
         <button onClick={resetGame}>Reiniciar</button>
