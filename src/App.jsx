@@ -3,41 +3,41 @@ import { useState } from 'react';
 function App() {
   const [grid, setGrid] = useState([[null, null, null], [null, null, null], [null, null, null]]);
   const [playerTurn, setPlayerTurn] = useState(true); // true = X, false = O
-  const currentPlayer = playerTurn ? 'X' : 'O'; // true = X, false = O
-  const [winner, setWinner] = useState(null); // null = jogo em andamento, "X" ou "O" = vencedor, "Draw" = empate
+  const currentPlayer = playerTurn ? 'X' : 'O';
+
+  // null = game in progress, "X" or "O" = winner, "Draw" =  no winner
+  const [winner, setWinner] = useState(null); 
 
   const handleOnClick = (rowIndex, colIndex) => {
+    // Do nothing if the cell is already filled or game is over
     if (grid[rowIndex][colIndex] !== null || winner) return;
 
-    const newGrid = [...grid];
-    updateGrid(newGrid, rowIndex, colIndex, currentPlayer);
+    const updatedGrid = [...grid];
+    updatedGrid[rowIndex][colIndex] = currentPlayer;  
 
-    setGrid(newGrid);
+    setGrid(updatedGrid); // Update grid after player's move
 
-    if (checkWinner(newGrid)) {
+    if (checkWinner(updatedGrid)) {
       setWinner(currentPlayer);
-    } else if (checkDraw(newGrid)) {
-      setWinner('Draw');
+    } else if (checkDraw(updatedGrid)) {
+      setWinner('Draw');  
     } else {
-      setPlayerTurn(!playerTurn);
+      setPlayerTurn(!playerTurn); // Switch player turn
     }
   };
 
-  const updateGrid = (grid, rowIndex, colIndex, player) => {
-    grid[rowIndex][colIndex] = player;
-  };
-
   const checkWinner = (grid) => {
+    // Check rows and columns
     for (let i = 0; i < 3; i++) {
       if (
-        grid[i].every(cell => cell === currentPlayer) || // Linha
-        grid.every(row => row[i] === currentPlayer) // Coluna
+        grid[i].every(cell => cell === currentPlayer) ||
+        grid.every(row => row[i] === currentPlayer)
       ) {
         return true;
       }
     }
 
-    // Verificar diagonais
+    // Check diagonals
     if (
       [0, 1, 2].every(index => grid[index][index] === currentPlayer) || 
       [0, 1, 2].every(index => grid[index][2 - index] === currentPlayer) 
@@ -48,10 +48,11 @@ function App() {
     return false;
   };
 
-  // Verifica se houve empate
+  // Check if the game is a draw
   const checkDraw = grid => grid.flat().every(cell => cell !== null);
 
   const resetGame = () => {
+    // Reset grid and game state
     setGrid([
       [null, null, null],
       [null, null, null],
