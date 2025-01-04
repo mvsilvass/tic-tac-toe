@@ -7,6 +7,7 @@ function App() {
 
   // null = game in progress, "X" or "O" = winner, "Draw" =  no winner
   const [winner, setWinner] = useState(null); 
+  const [score, setScore] = useState({ X: 0, O: 0 });
 
   const handleOnClick = (rowIndex, colIndex) => {
     // Do nothing if the cell is already filled or game is over
@@ -19,6 +20,7 @@ function App() {
 
     if (checkWinner(updatedGrid)) {
       setWinner(currentPlayer);
+      setScore((prevScore) => ({ ...prevScore, [currentPlayer]: prevScore[currentPlayer] + 1 }));
     } else if (checkDraw(updatedGrid)) {
       setWinner('Draw');  
     } else {
@@ -86,9 +88,14 @@ function App() {
       <>
         <div className="result">
           <p>
-            {winner === 'Draw' ? 'Empate!' : `Vencedor: ${winner}`}
+            {winner === 'Draw' ? 'Empate!' : `O jogador ${winner} ganhou!`}
           </p>
         </div>
+
+        <div className="score">
+          <p> X - {score.X} | O - {score.O}</p>
+        </div>
+
 
         <button onClick={resetGame}>Reiniciar</button>
       </>
