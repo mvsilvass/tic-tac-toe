@@ -43,6 +43,10 @@ body {
   border-radius: 10px;
   align-items: center;
   justify-content: center;
+}
+
+.cell:hover {
+  transform: scale(1.015);
   cursor: pointer;
 }
 
@@ -57,6 +61,7 @@ button{
 }
 
 button:hover{
+  transform: scale(1.05);
   cursor: pointer;
 }
 
@@ -64,4 +69,5 @@ button:hover{
   color: #EFB6C8;
   font-size: 100px;
   font-weight: bold;
+  text-align: center;
 }
