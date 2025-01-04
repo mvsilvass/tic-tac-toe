@@ -27,7 +27,7 @@ function App() {
     grid[rowIndex][colIndex] = player;
   };
 
-  const checkWinner = grid => {
+  const checkWinner = (grid) => {
     for (let i = 0; i < 3; i++) {
       if (
         grid[i].every(cell => cell === currentPlayer) || // Linha
@@ -63,28 +63,35 @@ function App() {
 
   return (
     <div className="game">
-      <h1>Jogo da Velha</h1>
-      <div className="grid">
-        {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="row">
-            {row.map((cell, colIndex) => (
-              <div key={`${rowIndex}-${colIndex}`} className="cell" onClick={() => handleOnClick(rowIndex, colIndex)}>
-                {cell}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <button onClick={resetGame}>Reiniciar Jogo</button>
-
-      {/* Display the winner */}
-      {winner && (
-        <div className="winner">
+    {!winner ? (
+      <>
+        <div className="grid">
+          {grid.map((row, rowIndex) => (
+            <div key={rowIndex} className="row">
+              {row.map((cell, colIndex) => (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  className="cell"
+                  onClick={() => handleOnClick(rowIndex, colIndex)}
+                >
+                  {cell}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </>
+    ) : (
+      <>
+        <div className="result">
           {winner === 'Draw' ? 'Empate!' : `Vencedor: ${winner}`}
         </div>
-      )}
-    </div>
-  );
+
+        <button onClick={resetGame}>Reiniciar</button>
+      </>
+    )}
+  </div>
+);
 }
 
 export default App;
